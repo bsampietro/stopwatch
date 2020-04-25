@@ -1,3 +1,4 @@
+import sys
 import tkinter as tk
 from clock import Clock
 
@@ -105,7 +106,10 @@ def main():
     ws = root.winfo_screenwidth() # width of the screen
     hs = root.winfo_screenheight() # height of the screen
     #root.geometry('+%d+%d'%(ws-170,hs-60))
-    root.geometry('+%d+%d' % (ws // 2, hs // 2))
+    if len(sys.argv) == 3:
+        root.geometry('+%d+%d' % (int(sys.argv[1]), int(sys.argv[2])))
+    else:
+        root.geometry('+%d+%d' % (ws // 2, hs // 2))
 
     sw = StopWatch(root)
     sw.pack(side=tk.TOP)
