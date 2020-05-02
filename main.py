@@ -102,24 +102,22 @@ def main():
     root.overrideredirect(True)
     root.wm_attributes('-topmost', True)
 
-    ## Position the window in the center
-    ws = root.winfo_screenwidth() # width of the screen
-    hs = root.winfo_screenheight() # height of the screen
-    #root.geometry('+%d+%d'%(ws-170,hs-60))
-    if len(sys.argv) == 3:
-        root.geometry('+%d+%d' % (int(sys.argv[1]), int(sys.argv[2])))
-    else:
-        root.geometry('+%d+%d' % (ws // 2, hs // 2))
-
     sw = StopWatch(root)
     sw.pack(side=tk.TOP)
 
+    if len(sys.argv) == 3:
+        sw.position = (int(sys.argv[1]), int(sys.argv[2]))
+    else:
+        ## Position the window in the center
+        sw.position = (root.winfo_screenwidth() // 2, root.winfo_screenheight() // 2)
+    root.geometry('+%d+%d' % sw.position)
+
     ## Adds capability to move window clicking on frame
     def moving(event):
-        x_ = event.x_root
-        y_ = event.y_root
-        root.geometry("+%s+%s" % (x_, y_))
+        sw.position = (event.x_root, event.y_root)
+        root.geometry("+%s+%s" % sw.position)
     sw.lbl_display.bind("<B1-Motion>", moving)
+    sw.btn_close.bind('<Button-3>', lambda event: sw.timestr.set("%s, %s" % sw.position))
 
     ## Mainloop
     root.mainloop()

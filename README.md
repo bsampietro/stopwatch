@@ -2,7 +2,7 @@
 Very simple and small stopwatch. Runs always on top. Made with Python and tkinter.
 
 ## Run it
-$ python3 route/to/main.py
+$ python3 route/to/main.py [x-position y-position]
 
 ### Linux
 Needs to have tkinter library available. tkinter is part of standard libray but tk-dev system package 
@@ -18,3 +18,5 @@ Reset: Double-click on label (Can not be running)
 Show seconds: Right click on label
 
 Add or substract 5 minutes: Mouse wheel on label
+
+Window position coordinates: Left click on close button (remove by clicking start/stop)
