@@ -96,6 +96,7 @@ class StopWatch(tk.Frame):
 
 def main():
     root = tk.Tk()
+    root.wm_iconbitmap("Iconsmind-Outline-Stopwatch-2.ico")
     #root.title("SW")
     
     ## Remove this section to create normal window
