@@ -2,30 +2,21 @@ import time
 
 class Clock:
     def __init__(self):
-        self.reset()
+        self.initialize_time_variables()
+        self.running = False
 
     def start(self):
-        if self.running:
-            return
         self.running = True
         self._start_time = time.time()
 
     def stop(self):
-        if not self.running:
-            return
         self.running = False
         self._elapsed_time += int(time.time() - self._start_time)
 
     def reset(self):
-        self._start_time = None
-        self._elapsed_time = 0
-        self.running = False
-
-    def elapsed_time(self):
+        self.initialize_time_variables()
         if self.running:
-            return self._elapsed_time + int(time.time() - self._start_time)
-        else:
-            return self._elapsed_time
+            self.start()
 
     def move(self, duration):
         self._elapsed_time += duration
@@ -41,3 +32,15 @@ class Clock:
             seconds = elapsed_time - (hours * 3600 + minutes * 60)
             result += ':%02d' % seconds
         return result
+
+    # Private
+
+    def initialize_time_variables(self):
+        self._start_time = None
+        self._elapsed_time = 0
+
+    def elapsed_time(self):
+        if self.running:
+            return self._elapsed_time + int(time.time() - self._start_time)
+        else:
+            return self._elapsed_time

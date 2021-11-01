@@ -13,7 +13,7 @@ If using system Python, need to install python-tk package.
 Only tested on Linux, probably works on other platforms too with minor changes.
 
 ## Functions
-Reset: Double-click on label (Can not be running)
+Reset: Double-click on label
 
 Show seconds: Right click on label
 

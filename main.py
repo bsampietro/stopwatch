@@ -60,8 +60,6 @@ class StopWatch(tk.Frame):
         self.update_label()
     
     def reset(self, event):
-        if self.clock.running:
-            return
         self.clock.reset()
         self.update_label()
 
