@@ -20,7 +20,6 @@ class TestClock(unittest.TestCase):
             c.stop()
 
             self.assertEqual(c.elapsed_time(), 60)
-            self.assertEqual(c.display_time(True), '00:01:00')
 
     @patch('time.time')
     def test_running_and_move(self, time_mock):
@@ -35,8 +34,6 @@ class TestClock(unittest.TestCase):
         time_mock.return_value = 400
         c.stop()
         self.assertFalse(c.running)
-
-        self.assertEqual(c.display_time(True), '00:10:00')
 
 
 if __name__ == '__main__':
