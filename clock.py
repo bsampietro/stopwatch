@@ -6,17 +6,22 @@ class Clock:
         self.running = False
 
     def start(self):
+        if self.running:
+            return
         self.running = True
         self._start_time = time.time()
 
     def stop(self):
+        if not self.running:
+            return
         self.running = False
         self._elapsed_time += int(time.time() - self._start_time)
 
     def reset(self):
         self.initialize_time_variables()
-        if self.running:
-            self.start()
+        self.running = False
+        # if self.running:
+        #     self.start()
 
     def move(self, duration):
         self._elapsed_time += duration
