@@ -15,7 +15,7 @@ class StopWatch(tk.Frame):
         self.clock = Clock()
         self.counter_clock = Clock()
         self.with_seconds = False
-        self.show_counter_clock = False
+        self.display = 1
 
         self.timestr = tk.StringVar()
         self.create_widgets()
@@ -26,7 +26,7 @@ class StopWatch(tk.Frame):
         self.lbl_display.bind('<Double-Button-1>', self.reset)
         self.lbl_display.bind('<Button-4>', self.add)
         self.lbl_display.bind('<Button-5>', self.substract)
-        self.lbl_display.bind('<Button-3>', self.toggle_show_counter_clock)
+        self.lbl_display.bind('<Button-3>', self.alternate_displays)
         # self.lbl_display.bind('<Button-3>', self.toggle_show_seconds)
         # self.lbl_display.bind('<MouseWheel>', self.add) # windows
         self.update_label()
@@ -41,7 +41,7 @@ class StopWatch(tk.Frame):
         )
         self.btn_close.pack(side=tk.LEFT)
 
-        # self.toggle_show_seconds(None)
+        # self.toggle_show_seconds(None) # uncomment for easier testing
 
 
     ## Event handlers
@@ -70,7 +70,8 @@ class StopWatch(tk.Frame):
     
     def reset(self, event):
         if self.clock.running:
-            self.start_stop() # force stop
+            self.cancel_refresh_loop()
+            self.btn_start_stop.config(text=START_TEXT)
         self.clock.reset()
         self.counter_clock.reset()
         self.update_label()
@@ -83,13 +84,15 @@ class StopWatch(tk.Frame):
         else:
             self.update_label()
 
-    def toggle_show_counter_clock(self, event):
-        if self.show_counter_clock:
-            self.update_label()
-        else:
+    def alternate_displays(self, event):
+        self.display += 1
+        if self.display == 2:
+            self.update_time_since_last_stop_label()
+        elif self.display == 3:
             self.update_counter_label()
-        self.show_counter_clock = not self.show_counter_clock
-
+        else:
+            self.display = 1
+            self.update_label()
 
     ## Helper methods
 
@@ -105,13 +108,27 @@ class StopWatch(tk.Frame):
         self.after_cancel(self.refresh_loop_reference)
 
     def update_label(self):
-        self.timestr.set(self.clock.display_time(self.with_seconds))
+        self.timestr.set(self.display_time(self.clock.elapsed_time()))
 
     def update_counter_label(self):
-        self.timestr.set('c ' + self.counter_clock.display_time(self.with_seconds))
+        self.timestr.set('C:' + self.display_time(self.counter_clock.elapsed_time()))
+
+    def update_time_since_last_stop_label(self):
+        self.timestr.set('L:' + self.display_time(self.clock.time_since_last_stop()))
 
     def refresh_interval(self):
         return 1000 if self.with_seconds else 60000 # in milisec
+
+    def display_time(self, time_in_seconds):
+        sign = '-' if time_in_seconds < 0 else ''
+        time_in_seconds = abs(time_in_seconds)
+        hours = time_in_seconds // 3600
+        minutes = (time_in_seconds - hours * 3600) // 60
+        result = '%s%02d:%02d' % (sign, hours, minutes)
+        if self.with_seconds:
+            seconds = time_in_seconds - (hours * 3600 + minutes * 60)
+            result += ':%02d' % seconds
+        return result
 
 
 def main():
