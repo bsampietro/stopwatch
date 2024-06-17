@@ -27,7 +27,7 @@ class StopWatch(tk.Frame):
         self.lbl_display.bind('<Button-4>', self.add)
         self.lbl_display.bind('<Button-5>', self.substract)
         self.lbl_display.bind('<Button-3>', self.alternate_displays)
-        # self.lbl_display.bind('<Button-3>', self.toggle_show_seconds)
+        # self.lbl_display.bind('<Double-Button-3>', self.toggle_show_seconds)
         # self.lbl_display.bind('<MouseWheel>', self.add) # windows
         self.update_label()
 
@@ -35,6 +35,7 @@ class StopWatch(tk.Frame):
             self, text=START_TEXT, padx=5, pady=0, command=self.start_stop
         )
         self.btn_start_stop.pack(side=tk.LEFT)
+        self.btn_start_stop.bind('<Button-3>', self.toggle_show_seconds)
 
         self.btn_close = tk.Button(
             self, text=CLOSE_TEXT, padx=5, pady=0, command=quit
