@@ -33,7 +33,7 @@ class Clock:
         else:
             return self._elapsed_time
 
-    def time_since_last_stop(self):
+    def elapsed_time_since_last_stop(self):
         if self._last_stop_time:
             return int(time.time()) - self._last_stop_time
         else:
