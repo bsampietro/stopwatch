@@ -87,13 +87,9 @@ class StopWatch(tk.Frame):
 
     def alternate_displays(self, event):
         self.display += 1
-        if self.display == 2:
-            self.update_time_since_last_stop_label()
-        elif self.display == 3:
-            self.update_counter_label()
-        else:
+        if self.display >= 4:
             self.display = 1
-            self.update_label()
+        self.update_label()
 
     ## Helper methods
 
@@ -109,13 +105,14 @@ class StopWatch(tk.Frame):
         self.after_cancel(self.refresh_loop_reference)
 
     def update_label(self):
-        self.timestr.set(self.display_time(self.clock.elapsed_time()))
-
-    def update_counter_label(self):
-        self.timestr.set('C:' + self.display_time(self.counter_clock.elapsed_time()))
-
-    def update_time_since_last_stop_label(self):
-        self.timestr.set('L:' + self.display_time(self.clock.time_since_last_stop()))
+        if self.display == 1:
+            self.timestr.set(self.display_time(self.clock.elapsed_time()))
+        elif self.display == 2:
+            self.timestr.set('L:' + self.display_time(self.clock.time_since_last_stop()))
+        elif self.display == 3:
+            self.timestr.set('C:' + self.display_time(self.counter_clock.elapsed_time()))
+        else:
+            raise RuntimeError('Display number is wrong')
 
     def refresh_interval(self):
         return 1000 if self.with_seconds else 60000 # in milisec
