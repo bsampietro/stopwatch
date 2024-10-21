@@ -108,9 +108,9 @@ class StopWatch(tk.Frame):
         if self.display == 1:
             self.timestr.set(self.display_time(self.clock.elapsed_time()))
         elif self.display == 2:
-            self.timestr.set('L:' + self.display_time(self.clock.elapsed_time_since_last_stop()))
+            self.timestr.set('L ' + self.display_time(self.clock.elapsed_time_since_last_stop()))
         elif self.display == 3:
-            self.timestr.set('C:' + self.display_time(self.counter_clock.elapsed_time()))
+            self.timestr.set('C ' + self.display_time(self.counter_clock.elapsed_time()))
         else:
             raise RuntimeError('Display number is wrong')
 
