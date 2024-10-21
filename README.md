@@ -13,10 +13,12 @@ If using system Python, need to install python-tk package.
 Only tested on Linux, probably works on other platforms too with minor changes.
 
 ## Functions
-Reset: Double-click on label
+Reset: Double-click on label.
 
-Show seconds: Right click on label
+Add or substract 5 minutes: Mouse wheel on label.
 
-Add or substract 5 minutes: Mouse wheel on label
+Toggle L view and C view: Right click on play button. L view shows time since last stop. C shows total time the clock was stopped since it was started from a reset.
 
-Window position coordinates: Left click on close button (remove by clicking start/stop)
+Show seconds: Right click on play button.
+
+Window position coordinates: Left click on close button (remove by clicking start/stop). Useful for knowing the position in order to pass x-position and y-position when starting it.
